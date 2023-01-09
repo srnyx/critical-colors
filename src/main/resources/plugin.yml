@@ -1,0 +1,27 @@
+name: ${name}
+description: You can't touch any blocks with the chosen color!
+authors:
+  - srnyx
+website: https://srnyx.xyz
+
+main: xyz.srnyx.criticalcolors.CriticalColors
+version: ${version}
+api-version: 1.13
+
+commands:
+  colorreload:
+    description: Reload the plugin
+    aliases:
+      - criticalcolorsreload
+    permission: criticalcolors.reload
+  color:
+    description: Change the color players can't touch
+    aliases:
+      - criticalcolors
+    permission: criticalcolors.color
+
+permissions:
+  criticalcolors.reload:
+    description: Allows access to use /colorreload
+  criticalcolors.color:
+    description: Allows access to use /color
