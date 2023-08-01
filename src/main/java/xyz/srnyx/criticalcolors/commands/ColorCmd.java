@@ -1,32 +1,27 @@
 package xyz.srnyx.criticalcolors.commands;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import xyz.srnyx.annoyingapi.AnnoyingMessage;
-import xyz.srnyx.annoyingapi.AnnoyingPlugin;
 import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
 import xyz.srnyx.annoyingapi.command.AnnoyingSender;
+import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 
 import xyz.srnyx.criticalcolors.CriticalColors;
+import xyz.srnyx.criticalcolors.file.CriticalColor;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
-public class ColorCommand implements AnnoyingCommand {
+public class ColorCmd implements AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
-    @NotNull private final Set<String> colors;
 
-    @Contract(pure = true)
-    public ColorCommand(@NotNull final CriticalColors plugin) {
+    public ColorCmd(@NotNull CriticalColors plugin) {
         this.plugin = plugin;
-        this.colors = plugin.section.getKeys(false);
     }
 
     @Override @NotNull
-    public AnnoyingPlugin getPlugin() {
+    public CriticalColors getAnnoyingPlugin() {
         return plugin;
     }
 
@@ -37,25 +32,24 @@ public class ColorCommand implements AnnoyingCommand {
 
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
-        final String[] args = sender.getArgs();
+        final String[] args = sender.args;
 
         // No arguments
         if (args.length == 0) {
-            if (plugin.color == null) {
+            if (plugin.data.color == null) {
                 new AnnoyingMessage(plugin, "command.get.none").send(sender);
                 return;
             }
             new AnnoyingMessage(plugin, "command.get.message")
-                    .replace("%color%", plugin.color)
+                    .replace("%chatcolor%", plugin.data.color.chatColor.toString())
+                    .replace("%color%", plugin.data.color.color)
                     .send(sender);
             return;
         }
 
         // <color>
-        String color = args[0];
-        if (color.equalsIgnoreCase("none")) color = null;
-        plugin.setColor(color);
-        plugin.data.set("color", color, true);
+        final CriticalColor color = plugin.getColor(args[0]);
+        plugin.data.setColor(color);
 
         // Message
         if (color == null) {
@@ -63,13 +57,16 @@ public class ColorCommand implements AnnoyingCommand {
             return;
         }
         new AnnoyingMessage(plugin, "command.set.message")
-                .replace("%color%", color)
+                .replace("%chatcolor%", color.chatColor.toString())
+                .replace("%color%", color.color)
                 .send(sender);
     }
 
     @Override @NotNull
-    public Collection<String> onTabComplete(@NotNull AnnoyingSender sender) {
-        final HashSet<String> suggestions = new HashSet<>(colors);
+    public Set<String> onTabComplete(@NotNull AnnoyingSender sender) {
+        final Set<String> suggestions = plugin.colors.stream()
+                .map(color -> color.color)
+                .collect(Collectors.toSet());
         suggestions.add("none");
         return suggestions;
     }

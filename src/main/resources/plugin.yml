@@ -1,10 +1,10 @@
 name: ${name}
-description: You can't touch any blocks with the chosen color!
+description: ${description}
 authors:
   - srnyx
-website: https://srnyx.xyz
+website: https://srnyx.com
 
-main: xyz.srnyx.criticalcolors.CriticalColors
+main: ${group}.criticalcolors.CriticalColors
 version: ${version}
 api-version: 1.13
 
@@ -19,9 +19,25 @@ commands:
     aliases:
       - criticalcolors
     permission: criticalcolors.color
+  colorrotate:
+    description: Toggle the automatic color change
+    aliases:
+      - criticalcolorsrotate
+    permission: criticalcolors.rotate
+  colorbar:
+    description: Toggle the color bossbar
+    aliases:
+      - colorbossbar
+      - criticalcolorsbar
+      - criticalcolorsbossbar
+    permission: criticalcolors.bar
 
 permissions:
   criticalcolors.reload:
     description: Allows access to use /colorreload
   criticalcolors.color:
     description: Allows access to use /color
+  criticalcolors.rotate:
+    description: Allows access to use /colorrotate
+  criticalcolors.bar:
+    description: Allows access to use /colorbar

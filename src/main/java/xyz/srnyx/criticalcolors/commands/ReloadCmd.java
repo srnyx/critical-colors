@@ -1,26 +1,23 @@
 package xyz.srnyx.criticalcolors.commands;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import xyz.srnyx.annoyingapi.AnnoyingMessage;
-import xyz.srnyx.annoyingapi.AnnoyingPlugin;
 import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
 import xyz.srnyx.annoyingapi.command.AnnoyingSender;
+import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 
 import xyz.srnyx.criticalcolors.CriticalColors;
 
 
-public class ReloadCommand implements AnnoyingCommand {
+public class ReloadCmd implements AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
 
-    @Contract(pure = true)
-    public ReloadCommand(@NotNull final CriticalColors plugin) {
+    public ReloadCmd(@NotNull final CriticalColors plugin) {
         this.plugin = plugin;
     }
 
     @Override @NotNull
-    public AnnoyingPlugin getPlugin() {
+    public CriticalColors getAnnoyingPlugin() {
         return plugin;
     }
 

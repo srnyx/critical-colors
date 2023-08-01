@@ -1,249 +1,33 @@
+DOCUMENTATION: https://annoying-api.srnyx.com/wiki/File-objects
+
+
+# Whether the default color files (blue, brown, gray, green, red) should be generated
+default-colors: true
+
 # The amount of damage to deal to the player if they step on a colored block
 # Put "kill" (or any string) to completely kill the player
 damage: "kill"
 
-# Make sure to only use blocks from the version you're using! The defaults are for 1.19.2
-colors:
-  red:
-    - POPPY
-    - STRIPPED_MANGROVE_LOG
-    - STRIPPED_MANGROVE_WOOD
-    - BRICKS
-    - BRICK_SLAB
-    - BRICK_STAIRS
-    - BRICK_WALL
-    - SMOOTH_RED_SANDSTONE
-    - SMOOTH_RED_SANDSTONE_SLAB
-    - SMOOTH_RED_SANDSTONE_STAIRS
-    - NETHER_GOLD_ORE
-    - NETHER_QUARTZ_ORE
-    - CHISELED_NETHER_BRICKS
-    - CRACKED_NETHER_BRICKS
-    - NETHER_BRICKS
-    - NETHER_BRICK_SLAB
-    - NETHER_BRICK_FENCE
-    - NETHER_BRICK_STAIRS
-    - NETHER_BRICK_WALL
-    - RED_CONCRETE
-    - RED_CONCRETE_POWDER
-    - RED_GLAZED_TERRACOTTA
-    - RED_MUSHROOM_BLOCK
-    - RED_MUSHROOM
-    - ROSE_BUSH
-    - FIRE_CORAL
-    - FIRE_CORAL_BLOCK
-    - FIRE_CORAL_FAN
-    - RED_BANNER
-    - RED_CANDLE
-    - RED_TERRACOTTA
-    - RED_WOOL
-    - RED_BED
-    - RED_CARPET
-    - RED_STAINED_GLASS
-    - RED_STAINED_GLASS_PANE
-    - RED_SHULKER_BOX
-    # Nether Bricks
-    - RED_NETHER_BRICKS
-    - RED_NETHER_BRICK_SLAB
-    - RED_NETHER_BRICK_STAIRS
-    - RED_NETHER_BRICK_WALL
-    # Mangrove
-    - MANGROVE_PLANKS
-    - MANGROVE_WOOD
-    - MANGROVE_LOG
-    - MANGROVE_SLAB
-    - MANGROVE_STAIRS
-    - MANGROVE_FENCE
-    - MANGROVE_FENCE_GATE
-    - MANGROVE_DOOR
-    - MANGROVE_TRAPDOOR
-    - MANGROVE_BUTTON
-    - MANGROVE_PRESSURE_PLATE
-    - MANGROVE_SIGN
-    # Crimson
-    - NETHER_WART_BLOCK
-    - CRIMSON_ROOTS
-    - WEEPING_VINES
-    - STRIPPED_CRIMSON_STEM
-    - STRIPPED_CRIMSON_HYPHAE
-    - CRIMSON_NYLIUM
-    - CRIMSON_PLANKS
-    - CRIMSON_STAIRS
-    - CRIMSON_SLAB
-    - CRIMSON_FENCE
-    - CRIMSON_FENCE_GATE
-    - CRIMSON_TRAPDOOR
-    - CRIMSON_DOOR
-    - CRIMSON_BUTTON
-    - CRIMSON_PRESSURE_PLATE
-    - CRIMSON_SIGN
-    - CRIMSON_HYPHAE
-    # Redstone
-    - REDSTONE
-    - TNT
-    - REDSTONE_BLOCK
-    - REDSTONE_LAMP
-    - REDSTONE_ORE
-    - REDSTONE_TORCH
-    - DEEPSLATE_REDSTONE_ORE
-    # Red Sand(stone)
-    - RED_SAND
-    - RED_SANDSTONE
-    - RED_SANDSTONE_SLAB
-    - RED_SANDSTONE_STAIRS
-    - RED_SANDSTONE_WALL
-    - CHISELED_RED_SANDSTONE
-    - CUT_RED_SANDSTONE
-    - CUT_RED_SANDSTONE_SLAB
-  green:
-    - EMERALD_BLOCK
-    - DEEPSLATE_EMERALD_ORE
-    - EMERALD_ORE
-    - MOSS_BLOCK
-    - GRASS_BLOCK
-    - SLIME_BLOCK
-    - MELON
-    - DRIED_KELP_BLOCK
-    - GRASS
-    - FERN
-    - AZALEA
-    - FLOWERING_AZALEA
-    - SEAGRASS
-    - SEA_PICKLE
-    - KELP
-    - MOSS_CARPET
-    - BIG_DRIPLEAF
-    - SMALL_DRIPLEAF
-    - BAMBOO
-    - CACTUS
-    - VINE
-    - LILY_PAD
-    - TALL_GRASS
-    - LARGE_FERN
-    - ZOMBIE_HEAD
-    - CREEPER_HEAD
-    - VERDANT_FROGLIGHT
-    - STICKY_PISTON
-    # Saplings
-    - OAK_SAPLING
-    - SPRUCE_SAPLING
-    - BIRCH_SAPLING
-    - JUNGLE_SAPLING
-    - ACACIA_SAPLING
-    - DARK_OAK_SAPLING
-    - MANGROVE_PROPAGULE
-    # Leaves
-    - ACACIA_LEAVES
-    - BIRCH_LEAVES
-    - DARK_OAK_LEAVES
-    - JUNGLE_LEAVES
-    - OAK_LEAVES
-    - SPRUCE_LEAVES
-    - MANGROVE_LEAVES
-    - AZALEA_LEAVES
-    - FLOWERING_AZALEA_LEAVES
-    # Green
-    - GREEN_CONCRETE
-    - GREEN_CONCRETE_POWDER
-    - GREEN_GLAZED_TERRACOTTA
-    - GREEN_TERRACOTTA
-    - GREEN_WOOL
-    - GREEN_BED
-    - GREEN_CARPET
-    - GREEN_STAINED_GLASS
-    - GREEN_STAINED_GLASS_PANE
-    - GREEN_SHULKER_BOX
-    - GREEN_BANNER
-    - GREEN_CANDLE
-    # Lime
-    - LIME_CONCRETE
-    - LIME_CONCRETE_POWDER
-    - LIME_GLAZED_TERRACOTTA
-    - LIME_TERRACOTTA
-    - LIME_WOOL
-    - LIME_BED
-    - LIME_CARPET
-    - LIME_STAINED_GLASS
-    - LIME_STAINED_GLASS_PANE
-    - LIME_SHULKER_BOX
-    - LIME_BANNER
-    - LIME_CANDLE
-  blue:
-    - WATER
-    - LAPIS_BLOCK
-    - LAPIS_ORE
-    - DEEPSLATE_LAPIS_ORE
-    - ICE
-    - PACKED_ICE
-    - BLUE_ICE
-    - DIAMOND_BLOCK
-    - DIAMOND_ORE
-    - DEEPSLATE_DIAMOND_ORE
-    - BLUE_CORAL_BLOCK
-    - SOUL_TORCH
-    - SOUL_LANTERN
-    - SOUL_CAMPFIRE
-    - ENDER_CHEST
-    # Warped
-    - WARPED_NYLIUM
-    - WARPED_PLANKS
-    - WARPED_STAIRS
-    - WARPED_SLAB
-    - WARPED_FENCE
-    - WARPED_FENCE_GATE
-    - WARPED_TRAPDOOR
-    - WARPED_DOOR
-    - WARPED_BUTTON
-    - WARPED_PRESSURE_PLATE
-    - WARPED_SIGN
-    - WARPED_HYPHAE
-    - WARPED_STEM
-    - WARPED_WART_BLOCK
-    - STRIPPED_WARPED_STEM
-    - STRIPPED_WARPED_HYPHAE
-    - WARPED_ROOTS
-    - NETHER_SPROUTS
-    - TWISTING_VINES
-    # Sculk
-    - SCULK
-    - SCULK_VEIN
-    - SCULK_CATALYST
-    - SCULK_SHRIEKER
-    - SCULK_SENSOR
-    # Cyan
-    - CYAN_CONCRETE
-    - CYAN_CONCRETE_POWDER
-    - CYAN_GLAZED_TERRACOTTA
-    - CYAN_TERRACOTTA
-    - CYAN_WOOL
-    - CYAN_BED
-    - CYAN_CARPET
-    - CYAN_STAINED_GLASS
-    - CYAN_STAINED_GLASS_PANE
-    - CYAN_SHULKER_BOX
-    - CYAN_BANNER
-    - CYAN_CANDLE
-    # Blue
-    - BLUE_CONCRETE
-    - BLUE_CONCRETE_POWDER
-    - BLUE_GLAZED_TERRACOTTA
-    - BLUE_TERRACOTTA
-    - BLUE_WOOL
-    - BLUE_BED
-    - BLUE_CARPET
-    - BLUE_STAINED_GLASS
-    - BLUE_STAINED_GLASS_PANE
-    - BLUE_SHULKER_BOX
-    - BLUE_CANDLE
-    # Light Blue
-    - LIGHT_BLUE_CONCRETE
-    - LIGHT_BLUE_CONCRETE_POWDER
-    - LIGHT_BLUE_GLAZED_TERRACOTTA
-    - LIGHT_BLUE_TERRACOTTA
-    - LIGHT_BLUE_WOOL
-    - LIGHT_BLUE_BED
-    - LIGHT_BLUE_CARPET
-    - LIGHT_BLUE_STAINED_GLASS
-    - LIGHT_BLUE_STAINED_GLASS_PANE
-    - LIGHT_BLUE_SHULKER_BOX
-    - LIGHT_BLUE_CANDLE
+rotate:
+  # The time in seconds between each rotation
+  time: 60
+
+  # The time in seconds the players are given before the color is changed
+  # This HAS to be less than the time above (unless time is 0, then it doesn't matter)
+  delay: 5
+
+  sounds:
+    delay: # SOUND
+      # Whether a sound should be played every DELAY second
+      enabled: true
+      sound: ENTITY_EXPERIENCE_ORB_PICKUP
+      volume: 0.5
+      pitch: 0.5
+      category: MASTER
+    set: # SOUND
+      # Whether a sound should be played when the color is set
+      enabled: true
+      sound: ENTITY_EXPERIENCE_ORB_PICKUP
+      volume: 0.5
+      pitch: 1
+      category: MASTER

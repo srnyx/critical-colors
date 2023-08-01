@@ -1,0 +1,24 @@
+colors:
+  chat: WHITE # https://helpch.at/docs/MC_VERSION/org/bukkit/ChatColor.html
+  bar: WHITE # https://helpch.at/docs/MC_VERSION/org/bukkit/boss/BarColor.html
+
+blocks:
+  - DIRT
+  - COARSE_DIRT
+  - PODZOL
+  - BROWN_CONCRETE
+  - BROWN_CONCRETE_POWDER
+  - BROWN_GLAZED_TERRACOTTA
+  - BROWN_TERRACOTTA
+  - BROWN_WOOL
+  - BROWN_STAINED_GLASS
+  - BROWN_STAINED_GLASS_PANE
+  - BROWN_SHULKER_BOX
+  - ROOTED_DIRT
+  - SPRUCE_LOG
+  - DARK_OAK_LOG
+  - STRIPPED_SPRUCE_LOG
+  - STRIPPED_DARK_OAK_LOG
+  - STRIPPED_SPRUCE_WOOD
+  - STRIPPED_DARK_OAK_WOOD
+  - ANCIENT_DEBRIS
