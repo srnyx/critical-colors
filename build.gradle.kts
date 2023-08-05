@@ -10,7 +10,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-setupAnnoyingAPI("4.1.0", "xyz.srnyx", "1.0.0", "You can't touch any blocks with the chosen color!")
+setupAnnoyingAPI("4.1.0", "xyz.srnyx", "2.0.0", "You can't touch any blocks with the chosen color!")
 spigotAPI("1.8.8")
 repository(Repository.PLACEHOLDER_API)
 dependencies.compileOnly("me.clip", "placeholderapi", "2.11.3")
