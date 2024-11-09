@@ -14,4 +14,4 @@ setupAnnoyingAPI("5.1.3", "xyz.srnyx", "2.1.0", "You can't touch any blocks with
 spigotAPI("1.8.8")
 
 repository(Repository.PLACEHOLDER_API)
-dependencies.compileOnly("me.clip", "placeholderapi", "2.11.3")
+dependencies.compileOnly("me.clip", "placeholderapi", "2.11.6")
