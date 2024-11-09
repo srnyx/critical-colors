@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-public class ColorCmd implements AnnoyingCommand {
+public class ColorCmd extends AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
 
     public ColorCmd(@NotNull CriticalColors plugin) {
@@ -32,23 +32,22 @@ public class ColorCmd implements AnnoyingCommand {
 
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
-        final String[] args = sender.args;
-
         // No arguments
-        if (args.length == 0) {
-            if (plugin.data.color == null) {
+        if (sender.args.length == 0) {
+            final CriticalColor color = plugin.data.getColor().orElse(null);
+            if (color == null) {
                 new AnnoyingMessage(plugin, "command.get.none").send(sender);
                 return;
             }
             new AnnoyingMessage(plugin, "command.get.message")
-                    .replace("%chatcolor%", plugin.data.color.chatColor.toString())
-                    .replace("%color%", plugin.data.color.color)
+                    .replace("%chatcolor%", color.chatColor.toString())
+                    .replace("%color%", color.color)
                     .send(sender);
             return;
         }
 
         // <color>
-        final CriticalColor color = plugin.getColor(args[0]);
+        final CriticalColor color = sender.getArgument(0, plugin::getColor);
         plugin.data.setColor(color);
 
         // Message

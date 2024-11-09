@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class ColorrotateCmd implements AnnoyingCommand {
+public class ColorrotateCmd extends AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
 
     public ColorrotateCmd(@NotNull CriticalColors plugin) {
@@ -32,7 +32,7 @@ public class ColorrotateCmd implements AnnoyingCommand {
 
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
-        boolean toggle = !plugin.data.rotate;
+        boolean toggle = !plugin.data.getRotate();
         if (sender.args.length != 0) toggle = sender.argEquals(0, "on");
         plugin.data.setRotate(toggle);
         new AnnoyingMessage(plugin, "command.rotate")
@@ -42,6 +42,6 @@ public class ColorrotateCmd implements AnnoyingCommand {
 
     @Override @NotNull
     public Set<String> onTabComplete(@NotNull AnnoyingSender sender) {
-        return Collections.singleton(plugin.data.rotate ? "off" : "on");
+        return Collections.singleton(plugin.data.getRotate() ? "off" : "on");
     }
 }

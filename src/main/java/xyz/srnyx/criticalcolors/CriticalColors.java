@@ -10,21 +10,23 @@ import org.jetbrains.annotations.Nullable;
 
 import xyz.srnyx.annoyingapi.AnnoyingPlugin;
 import xyz.srnyx.annoyingapi.PluginPlatform;
+import xyz.srnyx.annoyingapi.libs.javautilities.FileUtility;
 import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.annoyingapi.message.BroadcastType;
 import xyz.srnyx.annoyingapi.message.DefaultReplaceType;
-import xyz.srnyx.annoyingapi.utility.AnnoyingUtility;
 
 import xyz.srnyx.criticalcolors.commands.ColorbarCmd;
 import xyz.srnyx.criticalcolors.file.CriticalColor;
 import xyz.srnyx.criticalcolors.file.CriticalConfig;
 import xyz.srnyx.criticalcolors.file.CriticalData;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 import static xyz.srnyx.annoyingapi.reflection.org.bukkit.RefNamespacedKey.NAMESPACED_KEY_CONSTRUCTOR;
 import static xyz.srnyx.criticalcolors.reflection.org.bukkit.RefBukkit.*;
@@ -51,6 +53,9 @@ public class CriticalColors extends AnnoyingPlugin {
                         PluginPlatform.hangar(this, "srnyx"),
                         PluginPlatform.spigot("107312")))
                 .bStatsOptions(bStatsOptions -> bStatsOptions.id(18858))
+                .dataOptions(dataOptions -> dataOptions
+                        .enabled(true)
+                        .table(CriticalData.TABLE, CriticalData.COL_COLOR, CriticalData.COL_ROTATE, CriticalData.COL_BOSSBAR))
                 .registrationOptions
                 .automaticRegistration(automaticRegistration -> automaticRegistration.packages(
                         "xyz.srnyx.criticalcolors.commands",
@@ -69,13 +74,14 @@ public class CriticalColors extends AnnoyingPlugin {
                 bossBar = CREATE_BOSS_BAR_METHOD_4.invoke(Bukkit.class, "N/A", BAR_COLOR_VALUE_WHITE, BAR_STYLE_VALUE_SOLID, BAR_FLAG_ARRAY_NEW);
             }
         } catch (final IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            e.printStackTrace();
+            log(Level.WARNING, "Failed to create boss bar", e);
         }
 
         // config, colors, & data
         config = new CriticalConfig(this);
-        AnnoyingUtility.getFileNames(this, "colors").forEach(name -> colors.add(new CriticalColor(this, name)));
+        FileUtility.getFileNames(new File(getDataFolder(), "colors"), "yml").forEach(name -> colors.add(new CriticalColor(this, name)));
         data = new CriticalData(this);
+        data.convertOldData();
         updateBar();
         toggleRotating();
     }
@@ -87,7 +93,7 @@ public class CriticalColors extends AnnoyingPlugin {
             if (REMOVE_BOSS_BAR_METHOD != null && NAMESPACED_KEY_CONSTRUCTOR != null) try {
                 REMOVE_BOSS_BAR_METHOD.invoke(Bukkit.class, NAMESPACED_KEY_CONSTRUCTOR.newInstance(this, "cc_bar"));
             } catch (final IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                e.printStackTrace();
+                log(Level.WARNING, "Failed to remove boss bar", e);
             }
             bossBar = null;
         }
@@ -96,21 +102,24 @@ public class CriticalColors extends AnnoyingPlugin {
     }
 
     public void toggleRotating() {
-        if (!data.rotate || config.rotateTime == null || config.rotateDelay == null) {
+        final boolean rotate = data.getRotate();
+        if (!rotate || config.rotateTime == null || config.rotateDelay == null) {
             stopRotating();
             return;
         }
         updateBar();
+        if (rotateRunnable != null) rotateRunnable.cancel();
         rotateRunnable = new BukkitRunnable() {
             public void run() {
-                if (!data.rotate) {
+                if (!data.getRotate()) {
                     stopRotating();
                     return;
                 }
 
                 // Get next color
+                final CriticalColor currentColor = data.getColor().orElse(null);
                 final CriticalColor newColor = colors.stream()
-                        .filter(streamColor -> !streamColor.equals(data.color))
+                        .filter(streamColor -> !streamColor.equals(currentColor))
                         .skip(RANDOM.nextInt(colors.size() - 1))
                         .findFirst()
                         .orElse(null);
@@ -151,7 +160,7 @@ public class CriticalColors extends AnnoyingPlugin {
                         if (bossBar != null && BOSS_BAR_SET_PROGRESS_METHOD != null) try {
                             BOSS_BAR_SET_PROGRESS_METHOD.invoke(bossBar, (double) delayValue / config.rotateDelay);
                         } catch (IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
+                            log(Level.WARNING, "Failed to set boss bar progress", e);
                         }
                     }
                 }.runTaskTimer(CriticalColors.this, 0, 20);
@@ -173,7 +182,12 @@ public class CriticalColors extends AnnoyingPlugin {
 
     public void updateBar() {
         if (bossBar == null) return;
-        if (!data.bossbar || data.color == null) {
+        if (!data.getBossbar()) {
+            setBarVisibility(false);
+            return;
+        }
+        final CriticalColor color = data.getColor().orElse(null);
+        if (color == null) {
             setBarVisibility(false);
             return;
         }
@@ -182,20 +196,22 @@ public class CriticalColors extends AnnoyingPlugin {
         // Set title, color & progress
         try {
             if (BOSS_BAR_SET_TITLE_METHOD != null) BOSS_BAR_SET_TITLE_METHOD.invoke(bossBar, new AnnoyingMessage(this, "bossbar")
-                    .replace("%chatcolor%", data.color.chatColor.toString())
-                    .replace("%color%", data.color.color)
+                    .replace("%chatcolor%", color.chatColor.toString())
+                    .replace("%color%", color.color)
                     .toString());
-            if (BOSS_BAR_SET_COLOR_METHOD != null && data.color.barColor != null) BOSS_BAR_SET_COLOR_METHOD.invoke(bossBar, data.color.barColor);
+            if (BOSS_BAR_SET_COLOR_METHOD != null && color.barColor != null) BOSS_BAR_SET_COLOR_METHOD.invoke(bossBar, color.barColor);
             if (BOSS_BAR_SET_PROGRESS_METHOD != null) BOSS_BAR_SET_PROGRESS_METHOD.invoke(bossBar, 1.0);
         } catch (final InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+            log(Level.WARNING, "Failed to update boss bar", e);
         }
     }
 
     @Nullable
-    public CriticalColor getColor(@NotNull String name) {
+    public CriticalColor getColor(@Nullable String name) {
+        if (name == null) return null;
+        final String nameLower = name.toLowerCase();
         return colors.stream()
-                .filter(color -> color.color.equalsIgnoreCase(name))
+                .filter(color -> color.color.toLowerCase().equals(nameLower))
                 .findFirst()
                 .orElse(null);
     }
@@ -209,7 +225,7 @@ public class CriticalColors extends AnnoyingPlugin {
             if (BOSS_BAR_ADD_PLAYER_METHOD != null) for (final Player player : Bukkit.getOnlinePlayers()) BOSS_BAR_ADD_PLAYER_METHOD.invoke(bossBar, player);
             BOSS_BAR_SET_VISIBLE_METHOD.invoke(bossBar, true);
         } catch (final InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+            log(Level.WARNING, "Failed to set boss bar visibility", e);
         }
     }
 }

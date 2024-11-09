@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import xyz.srnyx.annoyingapi.file.AnnoyingResource;
+import xyz.srnyx.annoyingapi.libs.javautilities.MiscUtility;
 import xyz.srnyx.annoyingapi.utility.ReflectionUtility;
 
 import xyz.srnyx.criticalcolors.CriticalColors;
@@ -48,10 +49,10 @@ public class CriticalColor {
         // chatColor
         ChatColor newChatColor = null;
         if (chatColorString != null) { // From config
-            newChatColor = getChatColor(chatColorString.toUpperCase());
+            newChatColor = getChatColor(chatColorString);
             if (newChatColor == null) resource.log(Level.WARNING, "colors.chat", "&eInvalid chat color: &6" + chatColorString + "&e");
         }
-        if (newChatColor == null) newChatColor = getChatColor(color.toUpperCase()); // From color name
+        if (newChatColor == null) newChatColor = getChatColor(color); // From color name
         if (newChatColor == null) newChatColor = ChatColor.WHITE; // Default
         chatColor = newChatColor;
 
@@ -67,16 +68,17 @@ public class CriticalColor {
     }
 
     @Nullable
-    private ChatColor getChatColor(@NotNull String name) {
-        try {
-            return ChatColor.valueOf(name.toUpperCase());
-        } catch (final IllegalArgumentException e) {
-            return null;
-        }
+    private static ChatColor getChatColor(@NotNull String name) {
+        return MiscUtility.handleException(() -> ChatColor.valueOf(name.toUpperCase()), IllegalArgumentException.class).orElse(null);
     }
 
     @Nullable
     private Object getBarColor(@NotNull String name) {
-        return ReflectionUtility.getEnumValue(1, 9, 0, BAR_COLOR_ENUM, name.toUpperCase());
+        return MiscUtility.handleException(() -> ReflectionUtility.getEnumValue(1, 9, 0, BAR_COLOR_ENUM, name.toUpperCase()), IllegalArgumentException.class).orElse(null);
+    }
+
+    @Override @NotNull
+    public String toString() {
+        return color;
     }
 }

@@ -9,7 +9,7 @@ import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.criticalcolors.CriticalColors;
 
 
-public class ReloadCmd implements AnnoyingCommand {
+public class ReloadCmd extends AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
 
     public ReloadCmd(@NotNull final CriticalColors plugin) {

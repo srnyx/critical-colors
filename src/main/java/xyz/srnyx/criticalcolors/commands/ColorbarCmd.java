@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class ColorbarCmd implements AnnoyingCommand {
+public class ColorbarCmd extends AnnoyingCommand {
     @NotNull private final CriticalColors plugin;
 
     public ColorbarCmd(@NotNull CriticalColors plugin) {
@@ -32,7 +32,7 @@ public class ColorbarCmd implements AnnoyingCommand {
 
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
-        boolean toggle = !plugin.data.bossbar;
+        boolean toggle = !plugin.data.getBossbar();
         if (sender.args.length != 0) toggle = sender.argEquals(0, "on");
         plugin.data.setBossbar(toggle);
         new AnnoyingMessage(plugin, "command.bar.success")
@@ -42,6 +42,6 @@ public class ColorbarCmd implements AnnoyingCommand {
 
     @Override @NotNull
     public Set<String> onTabComplete(@NotNull AnnoyingSender sender) {
-        return Collections.singleton(plugin.data.bossbar ? "off" : "on");
+        return Collections.singleton(plugin.data.getBossbar() ? "off" : "on");
     }
 }

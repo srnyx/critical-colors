@@ -46,7 +46,7 @@ public class CriticalConfig {
         rotateDelay = newRotateDelay;
 
         // rotateSoundDelay & rotateSoundSet
-        rotateSoundDelay = config.getPlayableSound("rotate.sounds.delay");
-        rotateSoundSet = config.getPlayableSound("rotate.sounds.set");
+        rotateSoundDelay = config.getPlayableSound("rotate.sounds.delay").orElse(null);
+        rotateSoundSet = config.getPlayableSound("rotate.sounds.set").orElse(null);
     }
 }

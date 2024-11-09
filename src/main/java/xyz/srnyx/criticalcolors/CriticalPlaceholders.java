@@ -27,15 +27,11 @@ public class CriticalPlaceholders extends AnnoyingPAPIExpansion {
 
     @Override @Nullable
     public String onPlaceholderRequest(@Nullable Player player, @NotNull String identifier) {
-        // color
-        if (identifier.equals("color")) return plugin.data.color == null ? "N/A" : plugin.data.color.color;
-
-        // rotate
-        if (identifier.equals("rotate")) return String.valueOf(plugin.data.rotate);
-
-        // bossbar
-        if (identifier.equals("bossbar")) return String.valueOf(plugin.data.bossbar);
-
-        return null;
+        switch (identifier) {
+            case "color": return plugin.data.getColor().map(color -> color.color).orElse("N/A");
+            case "rotate": return String.valueOf(plugin.data.getRotate());
+            case "bossbar": return String.valueOf(plugin.data.getBossbar());
+            default: return null;
+        }
     }
 }
