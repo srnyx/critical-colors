@@ -7,14 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-
 import org.jetbrains.annotations.NotNull;
-
 import xyz.srnyx.annoyingapi.AnnoyingListener;
 import xyz.srnyx.annoyingapi.AnnoyingPlugin;
 import xyz.srnyx.annoyingapi.events.AdvancedPlayerMoveEvent;
-import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
-
 import xyz.srnyx.criticalcolors.CriticalColors;
 import xyz.srnyx.criticalcolors.file.CriticalColor;
 
@@ -61,18 +57,18 @@ public class PlayerListener extends AnnoyingListener {
 
         // Detect if player is standing on colored block
         final Optional<CriticalColor> color = plugin.data.getColor();
-        if (!color.isPresent()) return;
+        if (color.isEmpty()) return;
         final Material material = player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
         if (!color.get().materials.contains(material)) return;
 
         // Kill player
-        if (plugin.config.damage == null || player.getHealth() - plugin.config.damage <= 0) {
+        if (plugin.config.damage.amount() == null || player.getHealth() - plugin.config.damage.amount() <= 0) {
             players.put(player.getUniqueId(), material);
             player.setHealth(0);
             return;
         }
         // Damage player
-        player.damage(plugin.config.damage);
+        player.damage(plugin.config.damage.amount());
     }
 
     @EventHandler
@@ -82,7 +78,7 @@ public class PlayerListener extends AnnoyingListener {
         if (material == null) return;
         players.remove(player.getUniqueId());
         final Optional<CriticalColor> color = plugin.data.getColor();
-        if (!color.isPresent()) return;
+        if (color.isEmpty()) return;
 
         // Get block name
         final String blockEnumName = material.name();
@@ -92,7 +88,7 @@ public class PlayerListener extends AnnoyingListener {
         blockName.deleteCharAt(blockName.length() - 1);
 
         // Set death message
-        event.setDeathMessage(new AnnoyingMessage(plugin, "death")
+        event.setDeathMessage(plugin.getMessages().get().death.newMessage()
                 .replace("%player%", player.getName())
                 .replace("%block%", blockName)
                 .replace("%color%", color.get().color)

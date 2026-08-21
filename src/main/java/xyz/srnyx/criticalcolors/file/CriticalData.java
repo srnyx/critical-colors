@@ -2,11 +2,9 @@ package xyz.srnyx.criticalcolors.file;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import xyz.srnyx.annoyingapi.data.StringData;
 import xyz.srnyx.annoyingapi.file.AnnoyingData;
 import xyz.srnyx.annoyingapi.file.AnnoyingFile;
-
 import xyz.srnyx.criticalcolors.CriticalColors;
 
 import java.util.Optional;
@@ -26,10 +24,6 @@ public class CriticalData {
         this.data = new StringData(plugin, TABLE, "server");
     }
 
-    /**
-     * @deprecated  will be removed in the future
-     */
-    @Deprecated
     public void convertOldData() {
         final AnnoyingData file = new AnnoyingData(plugin, "data.yml", new AnnoyingFile.Options<>().canBeEmpty(false));
         if (file.contains("converted_now-stored-elsewhere")) return;
@@ -57,7 +51,7 @@ public class CriticalData {
     }
 
     public boolean getBossbar() {
-        return data.has(COL_BOSSBAR);
+        return data.get(COL_BOSSBAR, "true").equals("true");
     }
 
     public void setColor(@Nullable CriticalColor color) {
@@ -71,7 +65,7 @@ public class CriticalData {
     }
 
     public void setBossbar(boolean bossbar) {
-        data.set(COL_BOSSBAR, bossbar ? true : null);
+        data.set(COL_BOSSBAR, bossbar);
         plugin.updateBar();
     }
 }

@@ -1,19 +1,16 @@
 package xyz.srnyx.criticalcolors.file;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import xyz.srnyx.annoyingapi.file.AnnoyingResource;
 import xyz.srnyx.annoyingapi.libs.javautilities.MiscUtility;
 import xyz.srnyx.annoyingapi.utility.ReflectionUtility;
-
 import xyz.srnyx.criticalcolors.CriticalColors;
 
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -25,7 +22,7 @@ public class CriticalColor {
     @NotNull public static final AnnoyingResource.Options FILE_OPTIONS = new AnnoyingResource.Options().createDefaultFile(false).canBeEmpty(false);
 
     @NotNull public final String color;
-    @NotNull public final Set<Material> materials;
+    @NotNull public final Set<XMaterial> materials;
     @NotNull public final ChatColor chatColor;
     @Nullable public final Object barColor;
 
@@ -33,8 +30,9 @@ public class CriticalColor {
         this.color = color;
         final AnnoyingResource resource = new AnnoyingResource(plugin, "colors/" + color + ".yml", FILE_OPTIONS);
         materials = resource.getStringList("blocks").stream()
-                .map(Material::matchMaterial)
-                .filter(Objects::nonNull)
+                .map(XMaterial::matchXMaterial)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toSet());
 
         // colors

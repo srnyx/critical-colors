@@ -1,12 +1,9 @@
 package xyz.srnyx.criticalcolors.reflection.org.bukkit;
 
 import org.bukkit.Bukkit;
-
 import org.jetbrains.annotations.Nullable;
-
 import xyz.srnyx.annoyingapi.reflection.org.bukkit.RefNamespacedKey;
 import xyz.srnyx.annoyingapi.utility.ReflectionUtility;
-
 import xyz.srnyx.criticalcolors.reflection.org.bukkit.boss.RefBarColor;
 import xyz.srnyx.criticalcolors.reflection.org.bukkit.boss.RefBarFlag;
 import xyz.srnyx.criticalcolors.reflection.org.bukkit.boss.RefBarStyle;

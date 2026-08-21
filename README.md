@@ -15,3 +15,9 @@ If a player touches a block of the set color, they'll take a configured amount o
 # Wiki
 
 For all information about the plugin (commands, permissions, etc...) please see the wiki at [github.com/srnyx/critical-colors/wiki](https://github.com/srnyx/critical-colors/wiki)
+
+### not sponsors, just cool stuff :)
+
+[![Lilypad server hosting](https://srnyx.com/assets/banners/lilypad.png)](https://srnyx.com/lilypad?utm_medium=listing&utm_content=lilypad&utm_source=github&utm_campaign=critical-colors)
+[![Review me on TrustPilot!](https://srnyx.com/assets/banners/reviewme.png)](https://srnyx.com/review?utm_medium=listing&utm_content=review&utm_source=github&utm_campaign=critical-colors)
+[![Host events on Event Alerts](https://srnyx.com/assets/banners/eventalerts.png)](https://eventalerts.gg?utm_medium=listing&utm_content=eventalerts&utm_source=github&utm_campaign=critical-colors)

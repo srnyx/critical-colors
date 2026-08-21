@@ -1,33 +1,17 @@
 package xyz.srnyx.criticalcolors.commands;
 
 import org.jetbrains.annotations.NotNull;
-
-import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
 import xyz.srnyx.annoyingapi.command.AnnoyingSender;
-import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.annoyingapi.message.DefaultReplaceType;
-
 import xyz.srnyx.criticalcolors.CriticalColors;
 
 import java.util.Collections;
 import java.util.Set;
 
 
-public class ColorbarCmd extends AnnoyingCommand {
-    @NotNull private final CriticalColors plugin;
-
+public class ColorbarCmd extends xyz.srnyx.criticalcolors.commands.generated.ColorbarCmdGen {
     public ColorbarCmd(@NotNull CriticalColors plugin) {
-        this.plugin = plugin;
-    }
-
-    @Override @NotNull
-    public CriticalColors getAnnoyingPlugin() {
-        return plugin;
-    }
-
-    @Override @NotNull
-    public String getPermission() {
-        return "criticalcolors.colorbar";
+        super(plugin);
     }
 
     @Override
@@ -35,7 +19,7 @@ public class ColorbarCmd extends AnnoyingCommand {
         boolean toggle = !plugin.data.getBossbar();
         if (sender.args.length != 0) toggle = sender.argEquals(0, "on");
         plugin.data.setBossbar(toggle);
-        new AnnoyingMessage(plugin, "command.bar.success")
+        plugin.getMessages().get().command.bar.success.newMessage()
                 .replace("%state%", toggle, DefaultReplaceType.BOOLEAN)
                 .send(sender);
     }

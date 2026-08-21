@@ -1,5 +1,6 @@
 blocks:
   - STONE
+  - GRAVEL
   - ANDESITE
   - ANDESITE_SLAB
   - ANDESITE_STAIRS

@@ -1,33 +1,17 @@
 package xyz.srnyx.criticalcolors.commands;
 
 import org.jetbrains.annotations.NotNull;
-
-import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
 import xyz.srnyx.annoyingapi.command.AnnoyingSender;
-import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.annoyingapi.message.DefaultReplaceType;
-
 import xyz.srnyx.criticalcolors.CriticalColors;
 
 import java.util.Collections;
 import java.util.Set;
 
 
-public class ColorrotateCmd extends AnnoyingCommand {
-    @NotNull private final CriticalColors plugin;
-
+public class ColorrotateCmd extends xyz.srnyx.criticalcolors.commands.generated.ColorrotateCmdGen {
     public ColorrotateCmd(@NotNull CriticalColors plugin) {
-        this.plugin = plugin;
-    }
-
-    @Override @NotNull
-    public CriticalColors getAnnoyingPlugin() {
-        return plugin;
-    }
-
-    @Override @NotNull
-    public String getPermission() {
-        return "criticalcolors.rotate";
+        super(plugin);
     }
 
     @Override
@@ -35,7 +19,7 @@ public class ColorrotateCmd extends AnnoyingCommand {
         boolean toggle = !plugin.data.getRotate();
         if (sender.args.length != 0) toggle = sender.argEquals(0, "on");
         plugin.data.setRotate(toggle);
-        new AnnoyingMessage(plugin, "command.rotate")
+        plugin.getMessages().get().command.rotate.newMessage()
                 .replace("%state%", toggle, DefaultReplaceType.BOOLEAN)
                 .send(sender);
     }
