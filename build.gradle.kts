@@ -64,7 +64,7 @@ galaxy {
 
         platformPublishing {
             github("srnyx/critical-colors")
-            modrinth("critical-colors")
+            modrinth("ZXSFfy1U")
             hangar("CriticalColors")
             spigot("107312")
             curseforge("805743")
